@@ -2,14 +2,8 @@
 
 const mainSection = document.querySelector(`.main`);
 const menuContainer = mainSection.querySelector(`.main__control`);
-const searchContainer = mainSection.querySelector(`.main__search`);
-const filterContainer = mainSection.querySelector(`.main__filter`);
-const boardSection = mainSection.querySelector(`.board`);
-const tasksContainer = boardSection.querySelector(`.board__tasks`);
-const loadingButton = boardSection.querySelector(`.load-more`);
 
 const getMenuComponent = () => `
-  <h1 class="control__title">TASKMANAGER</h1>
   <section class="control__btn-wrap">
     <input
       type="radio"
@@ -41,82 +35,98 @@ const getMenuComponent = () => `
 `;
 
 const getSearchComponent = () => `
-  <input
-    type="text"
-    id="search__input"
-    class="search__input"
-    placeholder="START TYPING — SEARCH BY WORD, #HASHTAG OR DATE"
-  />
-  <label class="visually-hidden" for="search__input">Search</label>
+  <section class="main__search search container">
+    <input
+      type="text"
+      id="search__input"
+      class="search__input"
+      placeholder="START TYPING — SEARCH BY WORD, #HASHTAG OR DATE"
+    />
+    <label class="visually-hidden" for="search__input">Search</label>
+  </section>
 `;
 
 const getFilterComponent = () => `
-  <input
-    type="radio"
-    id="filter__all"
-    class="filter__input visually-hidden"
-    name="filter"
-    checked
-  />
-  <label for="filter__all" class="filter__label">
-    All <span class="filter__all-count">13</span></label
-  >
-  <input
-    type="radio"
-    id="filter__overdue"
-    class="filter__input visually-hidden"
-    name="filter"
-    disabled
-  />
-  <label for="filter__overdue" class="filter__label"
-    >Overdue <span class="filter__overdue-count">0</span></label
-  >
-  <input
-    type="radio"
-    id="filter__today"
-    class="filter__input visually-hidden"
-    name="filter"
-    disabled
-  />
-  <label for="filter__today" class="filter__label"
-    >Today <span class="filter__today-count">0</span></label
-  >
-  <input
-    type="radio"
-    id="filter__favorites"
-    class="filter__input visually-hidden"
-    name="filter"
-  />
-  <label for="filter__favorites" class="filter__label"
-    >Favorites <span class="filter__favorites-count">1</span></label
-  >
-  <input
-    type="radio"
-    id="filter__repeating"
-    class="filter__input visually-hidden"
-    name="filter"
-  />
-  <label for="filter__repeating" class="filter__label"
-    >Repeating <span class="filter__repeating-count">1</span></label
-  >
-  <input
-    type="radio"
-    id="filter__tags"
-    class="filter__input visually-hidden"
-    name="filter"
-  />
-  <label for="filter__tags" class="filter__label"
-    >Tags <span class="filter__tags-count">1</span></label
-  >
-  <input
-    type="radio"
-    id="filter__archive"
-    class="filter__input visually-hidden"
-    name="filter"
-  />
-  <label for="filter__archive" class="filter__label"
-    >Archive <span class="filter__archive-count">115</span></label
-  >
+  <section class="main__filter filter container">
+    <input
+      type="radio"
+      id="filter__all"
+      class="filter__input visually-hidden"
+      name="filter"
+      checked
+    />
+    <label for="filter__all" class="filter__label">
+      All <span class="filter__all-count">13</span></label
+    >
+    <input
+      type="radio"
+      id="filter__overdue"
+      class="filter__input visually-hidden"
+      name="filter"
+      disabled
+    />
+    <label for="filter__overdue" class="filter__label"
+      >Overdue <span class="filter__overdue-count">0</span></label
+    >
+    <input
+      type="radio"
+      id="filter__today"
+      class="filter__input visually-hidden"
+      name="filter"
+      disabled
+    />
+    <label for="filter__today" class="filter__label"
+      >Today <span class="filter__today-count">0</span></label
+    >
+    <input
+      type="radio"
+      id="filter__favorites"
+      class="filter__input visually-hidden"
+      name="filter"
+    />
+    <label for="filter__favorites" class="filter__label"
+      >Favorites <span class="filter__favorites-count">1</span></label
+    >
+    <input
+      type="radio"
+      id="filter__repeating"
+      class="filter__input visually-hidden"
+      name="filter"
+    />
+    <label for="filter__repeating" class="filter__label"
+      >Repeating <span class="filter__repeating-count">1</span></label
+    >
+    <input
+      type="radio"
+      id="filter__tags"
+      class="filter__input visually-hidden"
+      name="filter"
+    />
+    <label for="filter__tags" class="filter__label"
+      >Tags <span class="filter__tags-count">1</span></label
+    >
+    <input
+      type="radio"
+      id="filter__archive"
+      class="filter__input visually-hidden"
+      name="filter"
+    />
+    <label for="filter__archive" class="filter__label"
+      >Archive <span class="filter__archive-count">115</span></label
+    >
+  </section>
+`;
+
+const getBoardComponent = () => `
+  <section class="board container">
+    <div class="board__filter-list">
+      <a href="#" class="board__filter">SORT BY DEFAULT</a>
+      <a href="#" class="board__filter">SORT BY DATE up</a>
+      <a href="#" class="board__filter">SORT BY DATE down</a>
+    </div>
+
+    <div class="board__tasks"></div>
+  </section>
 `;
 
 const getCardComponent = () => `
@@ -461,20 +471,16 @@ const getLoadingComponent = () => `
   <button class="load-more" type="button">load more</button>
 `;
 
-const clearContainers = () => {
-  menuContainer.innerHTML = ``;
-  searchContainer.innerHTML = ``;
-  filterContainer.innerHTML = ``;
-  tasksContainer.innerHTML = ``;
-  loadingButton.remove();
-};
-
 const renderComponent = (container, component) => container.insertAdjacentHTML(`beforeend`, component);
 
-clearContainers();
 renderComponent(menuContainer, getMenuComponent());
-renderComponent(searchContainer, getSearchComponent());
-renderComponent(filterContainer, getFilterComponent());
+renderComponent(mainSection, getSearchComponent());
+renderComponent(mainSection, getFilterComponent());
+renderComponent(mainSection, getBoardComponent());
+
+const boardSection = mainSection.querySelector('.board');
+const tasksContainer = boardSection.querySelector('.board__tasks');
+
 renderComponent(tasksContainer, getEditFormComponent());
 for (let i = 0; i < 3; i++) {
   renderComponent(tasksContainer, getCardComponent());
