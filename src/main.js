@@ -478,8 +478,8 @@ renderComponent(mainSection, getSearchComponent());
 renderComponent(mainSection, getFilterComponent());
 renderComponent(mainSection, getBoardComponent());
 
-const boardSection = mainSection.querySelector('.board');
-const tasksContainer = boardSection.querySelector('.board__tasks');
+const boardSection = mainSection.querySelector(`.board`);
+const tasksContainer = boardSection.querySelector(`.board__tasks`);
 
 renderComponent(tasksContainer, getEditFormComponent());
 for (let i = 0; i < 3; i++) {
