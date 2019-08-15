@@ -1,4 +1,4 @@
-export const getFilterComponent = () => `
+export const getFilterComponent = ([all, overdue, today, favorites, repeating, tags, archive]) => `
   <section class="main__filter filter container">
     <input
       type="radio"
@@ -8,63 +8,67 @@ export const getFilterComponent = () => `
       checked
     />
     <label for="filter__all" class="filter__label">
-      All <span class="filter__all-count">13</span></label
+      ${all.title} <span class="filter__all-count">${all.count}</span></label
     >
     <input
       type="radio"
       id="filter__overdue"
       class="filter__input visually-hidden"
       name="filter"
-      disabled
+      ${overdue.count > 0 ? `` : `disabled`}
     />
     <label for="filter__overdue" class="filter__label"
-      >Overdue <span class="filter__overdue-count">0</span></label
+      >${overdue.title} <span class="filter__overdue-count">${overdue.count}</span></label
     >
     <input
       type="radio"
       id="filter__today"
       class="filter__input visually-hidden"
       name="filter"
-      disabled
+      ${today.count > 0 ? `` : `disabled`}
     />
     <label for="filter__today" class="filter__label"
-      >Today <span class="filter__today-count">0</span></label
+      >${today.title} <span class="filter__today-count">${today.count}</span></label
     >
     <input
       type="radio"
       id="filter__favorites"
       class="filter__input visually-hidden"
       name="filter"
+      ${favorites.count > 0 ? `` : `disabled`}
     />
     <label for="filter__favorites" class="filter__label"
-      >Favorites <span class="filter__favorites-count">1</span></label
+      >${favorites.title} <span class="filter__favorites-count">${favorites.count}</span></label
     >
     <input
       type="radio"
       id="filter__repeating"
       class="filter__input visually-hidden"
       name="filter"
+      ${repeating.count > 0 ? `` : `disabled`}
     />
     <label for="filter__repeating" class="filter__label"
-      >Repeating <span class="filter__repeating-count">1</span></label
+      >${repeating.title} <span class="filter__repeating-count">${repeating.count}</span></label
     >
     <input
       type="radio"
       id="filter__tags"
       class="filter__input visually-hidden"
       name="filter"
+      ${tags.count > 0 ? `` : `disabled`}
     />
     <label for="filter__tags" class="filter__label"
-      >Tags <span class="filter__tags-count">1</span></label
+      >${tags.title} <span class="filter__tags-count">${tags.count}</span></label
     >
     <input
       type="radio"
       id="filter__archive"
       class="filter__input visually-hidden"
       name="filter"
+      ${archive.count > 0 ? `` : `disabled`}
     />
     <label for="filter__archive" class="filter__label"
-      >Archive <span class="filter__archive-count">115</span></label
+      >${archive.title} <span class="filter__archive-count">${archive.count}</span></label
     >
   </section>
 `;
