@@ -37,13 +37,11 @@ const tasksContainer = boardSection.querySelector(`.board__tasks`);
 
 renderComponent(tasksContainer, getEditTaskComponent(tasks[0]), `beforeend`);
 renderedTasksCount++;
-console.log('after 1: ', renderedTasksCount)
 
 for (let i = renderedTasksCount; i < TASK_STEP; i++) {
   if (renderedTasksCount < TASKS_COUNT) {
     renderComponent(tasksContainer, getTaskComponent(tasks[i]), `beforeend`);
     renderedTasksCount++;
-    console.log('after 2: ', renderedTasksCount)
   } else {
     break;
   }
@@ -59,7 +57,6 @@ loadButton.addEventListener(`click`, () => {
     if (renderedTasksCount < TASKS_COUNT) {
       renderComponent(tasksContainer, getTaskComponent(tasks[i]), `beforeend`);
       renderedTasksCount++;
-      console.log('after 3: ', renderedTasksCount)
     } else {
       loadButton.remove();
       break;
