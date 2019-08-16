@@ -1,4 +1,24 @@
-const HASHTAGS = [`homework`, `theory`, `practice`, `intensive`, `keks`];
+const HASHTAGS = [
+  `homework`,
+  `theory`,
+  `practice`,
+  `intensive`,
+  `keks`
+];
+
+const DESCRIPTIONS = [
+  `Изучить теорию`,
+  `Сделать домашку`,
+  `Пройти интенсив на соточку`
+];
+
+const COLORS = [
+  `black`,
+  `yellow`,
+  `blue`,
+  `green`,
+  `pink`
+];
 
 export const createTask = () => {
   const TAGS_COUNT = Math.floor(Math.random() * 4);
@@ -8,11 +28,7 @@ export const createTask = () => {
   }
 
   return {
-    description: [
-      `Изучить теорию`,
-      `Сделать домашку`,
-      `Пройти интенсив на соточку`,
-    ][Math.floor(Math.random() * 3)],
+    description: DESCRIPTIONS[Math.floor(Math.random() * 3)],
     dueDate: Date.now() + (Math.floor(Math.random() * 15) - 7) * 24 * 60 * 60 * 1000,
     repeatingDays: {
       'mo': Boolean(Math.round(Math.random())),
@@ -24,13 +40,7 @@ export const createTask = () => {
       'su': Boolean(Math.round(Math.random())),
     },
     tags,
-    color: [
-      `black`,
-      `yellow`,
-      `blue`,
-      `green`,
-      `pink`,
-    ][Math.floor(Math.random() * 5)],
+    color: COLORS[Math.floor(Math.random() * 5)],
     isFavorite: Boolean(Math.round(Math.random())),
     isArchive: Boolean(Math.round(Math.random())),
   };
