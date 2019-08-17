@@ -1,24 +1,4 @@
-const HASHTAGS = [
-  `homework`,
-  `theory`,
-  `practice`,
-  `intensive`,
-  `keks`
-];
-
-const DESCRIPTIONS = [
-  `Изучить теорию`,
-  `Сделать домашку`,
-  `Пройти интенсив на соточку`
-];
-
-const COLORS = [
-  `black`,
-  `yellow`,
-  `blue`,
-  `green`,
-  `pink`
-];
+import {HASHTAGS, DESCRIPTIONS, COLORS} from '../utils/constants.js';
 
 export const createTask = () => {
   const TAGS_COUNT = Math.floor(Math.random() * 4);
