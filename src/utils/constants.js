@@ -1,3 +1,8 @@
+const Position = {
+  AFTERBEGIN: `afterbegin`,
+  BEFOREEND: `beforeend`
+};
+
 const TASKS_COUNT = 19;
 const TASK_STEP = 8;
 
@@ -25,4 +30,4 @@ const COLORS = [
   `pink`
 ];
 
-export {HASHTAGS, DESCRIPTIONS, COLORS};
+export {Position, HASHTAGS, DESCRIPTIONS, COLORS};
