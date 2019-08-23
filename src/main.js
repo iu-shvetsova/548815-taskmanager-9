@@ -23,8 +23,6 @@ const createTasks = () => {
   }
 };
 
-const renderComponent = (container, component, position) => container.insertAdjacentHTML(position, component);
-
 const renderComponents = () => {
   const renderMenu = () => {
     const menu = new Menu();
