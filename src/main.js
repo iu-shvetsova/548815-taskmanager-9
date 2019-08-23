@@ -24,6 +24,9 @@ const createTasks = () => {
 };
 
 const renderComponents = () => {
+  const mainSection = document.querySelector(`.main`);
+  const menuContainer = mainSection.querySelector(`.main__control`);
+
   const renderMenu = () => {
     const menu = new Menu();
     render(menuContainer, menu.getElement(), Position.BEFOREEND);
@@ -39,12 +42,12 @@ const renderComponents = () => {
     render(mainSection, filter.getElement(), Position.BEFOREEND);
   }
 
-  const renderBoard = () => {
-    const board = new Board();
+  const renderBoard = (tasksCount) => {
+    const board = new Board(tasksCount);
     render(mainSection, board.getElement(), Position.BEFOREEND);
   }
 
-  const renderTask = (taskMock) => {
+  const renderTask = (position, taskMock) => {
     const task = new Task(taskMock);
     const taskEdit = new TaskEdit(taskMock);
 
@@ -65,17 +68,44 @@ const renderComponents = () => {
       document.addEventListener(`keydown`, onEscPress);
     });
 
-    render(tasksContainer, task.getElement(), Position.BEFOREEND);
+    taskEdit.getElement().querySelector(`textarea`).addEventListener(`focus`, () => {
+      document.removeEventListener(`keydown`, onEscPress);
+    });
+
+    taskEdit.getElement().querySelector(`textarea`).addEventListener(`blur`, () => {
+      document.addEventListener(`keydown`, onEscPress);
+    });
+
+    render(position, task.getElement(), Position.BEFOREEND);
   };
 
-  const renderLoadButton = () => {
+  const renderTasks = () => {
+    if (tasks.length > 0) {
+      const boardSection = mainSection.querySelector(`.board`);
+      const tasksContainer = boardSection.querySelector(`.board__tasks`);
+
+      for (let i = renderedTasksCount; i < TASK_STEP; i++) {
+        if (renderedTasksCount < TASKS_COUNT) {
+          renderTask(tasksContainer, tasks[i]);
+          renderedTasksCount++;
+        } else {
+          break;
+        }
+      }
+
+      renderLoadButton(boardSection);
+    }
+  };
+
+  const renderLoadButton = (container) => {
     const button = new LoadButton();
 
     button.getElement().addEventListener(`click`, () => {
+      const tasksContainer = document.querySelector(`.board__tasks`);
       const currentCount = renderedTasksCount;
       for (let i = renderedTasksCount; i < TASK_STEP + currentCount; i++) {
         if (renderedTasksCount < TASKS_COUNT) {
-          renderTask(tasks[i]);
+          renderTask(tasksContainer, tasks[i]);
           renderedTasksCount++;
         } else {
           unrender(button.getElement());
@@ -84,33 +114,15 @@ const renderComponents = () => {
       }
     });
 
-    render(boardSection, button.getElement(), Position.BEFOREEND);
+    render(container, button.getElement(), Position.BEFOREEND);
   }
-
-  const mainSection = document.querySelector(`.main`);
-  const menuContainer = mainSection.querySelector(`.main__control`);
 
   renderMenu();
   renderSearch();
   renderFilter();
-  renderBoard();
-
-  const boardSection = mainSection.querySelector(`.board`);
-  const tasksContainer = boardSection.querySelector(`.board__tasks`);
-
-  for (let i = renderedTasksCount; i < TASK_STEP; i++) {
-    if (renderedTasksCount < TASKS_COUNT) {
-      renderTask(tasks[i]);
-      renderedTasksCount++;
-    } else {
-      break;
-    }
-  }
-
-  renderLoadButton();
+  renderBoard(tasks.length);
+  renderTasks();
 };
 
 createTasks();
 renderComponents();
-
-
