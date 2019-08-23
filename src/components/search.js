@@ -1,6 +1,6 @@
-import {createElement} from '../utils/utils.js';
+import {createElement} from '../utils/index.js';
 
-export class Search {
+export default class Search {
   constructor() {
 
   }

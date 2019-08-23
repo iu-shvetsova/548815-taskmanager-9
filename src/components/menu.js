@@ -1,6 +1,6 @@
-import {createElement} from '../utils/utils.js';
+import {createElement} from '../utils/index.js';
 
-export class Menu {
+export default class Menu {
   constructor() {
 
   }

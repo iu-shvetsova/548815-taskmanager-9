@@ -3,7 +3,7 @@ const Position = {
   BEFOREEND: `beforeend`
 };
 
-const TASKS_COUNT = 19;
+const TASKS_COUNT = 15;
 const TASK_STEP = 8;
 
 export {TASKS_COUNT, TASK_STEP};
