@@ -4,15 +4,15 @@ import {createTask} from './mocks/data.js';
 
 import {Position, TASKS_COUNT, TASK_STEP} from './utils/constants.js';
 import {getFilters} from './utils/filters.js';
-import {render} from './utils/utils.js';
+import {render, unrender} from './utils/index.js';
 
-import {Menu} from './components/site-menu.js';
-import {Search} from './components/search.js';
-import {Filter} from './components/filter.js';
-import {Board} from './components/board.js';
-import {TaskEdit} from './components/task-edit.js';
-import {Task} from './components/task.js';
-import {LoadButton} from './components/load-more-button.js';
+import Menu from './components/menu.js';
+import Search from './components/search.js';
+import Filter from './components/filter.js';
+import Board from './components/board.js';
+import TaskEdit from './components/task-edit.js';
+import Task from './components/task.js';
+import LoadButton from './components/load-button.js';
 
 const tasks = [];
 let renderedTasksCount = 0;
@@ -78,7 +78,7 @@ const renderComponents = () => {
           renderTask(tasks[i]);
           renderedTasksCount++;
         } else {
-          loadButton.remove();
+          unrender(button.getElement());
           break;
         }
       }

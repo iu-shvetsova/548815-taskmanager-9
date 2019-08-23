@@ -1,6 +1,6 @@
-import {createElement} from '../utils/utils.js';
+import {createElement} from '../utils/index.js';
 
-export class Filter {
+export default class Filter {
   constructor([all, overdue, today, favorites, repeating, tags, archive]) {
     this._all = all;
     this._overdue = overdue;
