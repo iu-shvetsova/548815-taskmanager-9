@@ -1,7 +1,8 @@
-import {createElement} from '../utils/index.js';
+import AbstractComponent from './absctract-component.js';
 
-export default class Filter {
+export default class Filter extends AbstractComponent {
   constructor([all, overdue, today, favorites, repeating, tags, archive]) {
+    super();
     this._all = all;
     this._overdue = overdue;
     this._today = today;
@@ -9,20 +10,6 @@ export default class Filter {
     this._repeating = repeating;
     this._tags = tags;
     this._archive = archive;
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    if (this._element) {
-      this._element = null;
-    }
   }
 
   getTemplate() {
