@@ -1,13 +1,13 @@
 import AbstractComponent from './absctract-component.js';
 
-export default class LoadButton extends AbstractComponent {
+export default class TasksList extends AbstractComponent {
   constructor() {
     super();
   }
 
   getTemplate() {
     return `
-      <button class="load-more" type="button">load more</button>
+      <div class="board__tasks"></div>
     `;
   }
 }
