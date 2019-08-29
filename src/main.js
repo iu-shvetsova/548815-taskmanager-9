@@ -2,17 +2,16 @@
 
 import {createTask} from './mocks/data.js';
 
-import {Position, TASKS_COUNT, TASK_STEP} from './utils/constants.js';
+import {Position, TASKS_COUNT} from './utils/constants.js';
 import {getFilters} from './utils/filters.js';
 import {render, unrender} from './utils/index.js';
 
 import Menu from './components/menu.js';
 import Search from './components/search.js';
 import Filter from './components/filter.js';
-import {Board, BoardController} from './components/board.js';
+import BoardController from './controllers/board-controller.js';
 
 const tasks = [];
-let renderedTasksCount = 0;
 
 const createTasks = () => {
   for (let i = 0; i < TASKS_COUNT; i++) {
@@ -43,7 +42,7 @@ const renderComponents = () => {
   renderSearch();
   renderFilter();
 
-  const boardController = new BoardController(mainSection, tasks, renderedTasksCount);
+  const boardController = new BoardController(mainSection, tasks);
   boardController.init();
 };
 
