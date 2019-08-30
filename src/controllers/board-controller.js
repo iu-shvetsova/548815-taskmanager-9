@@ -1,5 +1,5 @@
 import {render, unrender} from '../utils/index.js';
-import {Position, TASKS_COUNT, TASK_STEP} from '../utils/constants.js';
+import {Position, TASK_STEP} from '../utils/constants.js';
 import Board from '../components/board.js';
 import Sort from '../components/sort.js';
 import TasksList from '../components/tasks-list.js';
@@ -51,15 +51,29 @@ export default class BoardController {
     render(this._tasksList.getElement(), task.getElement(), Position.BEFOREEND);
   }
 
+  _renderButton() {
+    if (this._renderedTasksCount < this._tasks.length) {
+      render(this._tasksList.getElement(), this._button.getElement(), Position.AFTEREND);
+      this._button.getElement().addEventListener(`click`, () => this._renderTasks(this._tasks));
+    }
+  }
+
   _renderTasks(tasks) {
-    const currentCount = this._renderedTasksCount;
-    for (let i = this._renderedTasksCount; i < TASK_STEP + currentCount; i++) {
-      if (this._renderedTasksCount < TASKS_COUNT) {
-        this._renderTask(tasks[i]);
-        this._renderedTasksCount++;
-      } else {
-        unrender(this._button.getElement());
-        break;
+    if (this._tasks.length <= TASK_STEP) {
+      if (this._renderedTasksCount === 0) {
+        this._tasks.forEach((task) => this._renderTask(task));
+        this._renderedTasksCount = this._tasks.length;
+      }
+    } else {
+      const currentCount = this._renderedTasksCount;
+      for (let i = this._renderedTasksCount; i < TASK_STEP + currentCount; i++) {
+        if (this._renderedTasksCount < this._tasks.length) {
+          this._renderTask(tasks[i]);
+          this._renderedTasksCount++;
+        } else {
+          unrender(this._button.getElement());
+          break;
+        }
       }
     }
   }
@@ -72,7 +86,6 @@ export default class BoardController {
     }
 
     this._tasksList.getElement().innerHTML = ``;
-    this._renderedTasksCount = 0;
 
     switch (evt.target.dataset.sortType) {
       case `date-up`:
@@ -86,8 +99,9 @@ export default class BoardController {
         break;
     }
 
-    this._renderTasks(this._tasks);
-    render(this._tasksList.getElement(), this._button.getElement(), Position.AFTEREND);
+    for (let i = 0; i < this._renderedTasksCount; i++) {
+      this._renderTask(this._tasks[i]);
+    }
   }
 
   init() {
@@ -98,11 +112,10 @@ export default class BoardController {
 
       render(boardSection, this._sort.getElement(), Position.BEFOREEND);
       render(boardSection, this._tasksList.getElement(), Position.BEFOREEND);
-      render(this._tasksList.getElement(), this._button.getElement(), Position.AFTEREND);
       this._renderTasks(this._tasks);
+      this._renderButton();
 
       this._sort.getElement().addEventListener(`click`, (evt) => this._onSortLinkClick(evt));
-      this._button.getElement().addEventListener(`click`, () => this._renderTasks(this._tasks));
     }
   }
 }
