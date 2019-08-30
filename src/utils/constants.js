@@ -1,9 +1,10 @@
 const Position = {
   AFTERBEGIN: `afterbegin`,
-  BEFOREEND: `beforeend`
+  BEFOREEND: `beforeend`,
+  AFTEREND: `afterend`
 };
 
-const TASKS_COUNT = 15;
+const TASKS_COUNT = 17;
 const TASK_STEP = 8;
 
 export {TASKS_COUNT, TASK_STEP};
