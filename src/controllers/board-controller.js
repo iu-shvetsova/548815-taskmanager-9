@@ -1,7 +1,7 @@
 import {render, unrender} from '../utils/index.js';
 import {Position, TASKS_COUNT, TASK_STEP} from '../utils/constants.js';
 import Board from '../components/board.js';
-import Sorting from '../components/sorting.js';
+import Sort from '../components/sort.js';
 import TasksList from '../components/tasks-list.js';
 import Task from '../components/task.js';
 import TaskEdit from '../components/task-edit.js';
@@ -14,7 +14,7 @@ export default class BoardController {
     this._tasks = tasks;
     this._renderedTasksCount = 0;
     this._board = new Board(tasks.length);
-    this._sorting = new Sorting();
+    this._sort = new Sort();
     this._tasksList = new TasksList();
     this._button = new LoadButton();
   }
@@ -96,12 +96,12 @@ export default class BoardController {
     if (this._tasks.length > 0) {
       const boardSection = document.querySelector(`.board`);
 
-      render(boardSection, this._sorting.getElement(), Position.BEFOREEND);
+      render(boardSection, this._sort.getElement(), Position.BEFOREEND);
       render(boardSection, this._tasksList.getElement(), Position.BEFOREEND);
       render(this._tasksList.getElement(), this._button.getElement(), Position.AFTEREND);
       this._renderTasks(this._tasks);
 
-      this._sorting.getElement().addEventListener(`click`, (evt) => this._onSortLinkClick(evt));
+      this._sort.getElement().addEventListener(`click`, (evt) => this._onSortLinkClick(evt));
       this._button.getElement().addEventListener(`click`, () => this._renderTasks(this._tasks));
     }
   }

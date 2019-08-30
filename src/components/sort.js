@@ -1,6 +1,6 @@
 import AbstractComponent from './abstract-component.js';
 
-export default class Sorting extends AbstractComponent {
+export default class Sort extends AbstractComponent {
   constructor() {
     super();
   }
