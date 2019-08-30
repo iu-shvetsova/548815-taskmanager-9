@@ -1,4 +1,4 @@
-import AbstractComponent from './absctract-component.js';
+import AbstractComponent from './abstract-component.js';
 
 export default class Filter extends AbstractComponent {
   constructor([all, overdue, today, favorites, repeating, tags, archive]) {
