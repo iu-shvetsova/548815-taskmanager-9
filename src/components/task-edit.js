@@ -1,3 +1,4 @@
+import {ESC_KEYCODE, SPACE_KEYCODE} from '../utils/constants.js';
 import AbstractComponent from './abstract-component.js';
 
 export default class TaskEdit extends AbstractComponent {
@@ -8,6 +9,110 @@ export default class TaskEdit extends AbstractComponent {
     this._repeatingDays = repeatingDays;
     this._tags = tags;
     this._color = color;
+    this._currentColor = color;
+
+    this._subscribeOnEvents();
+  }
+
+  _setRepeat() {
+    this.getElement().querySelector(`.card__repeat-toggle`).addEventListener(`click`, () => {
+      const repeatStatus = this.getElement().querySelector(`.card__repeat-status`);
+      const repeatField = this.getElement().querySelector(`.card__repeat-days`);
+
+      if (repeatStatus.innerText.toLowerCase() === `yes`) {
+        repeatStatus.innerText = `no`;
+        repeatField.style.display = `none`;
+        this._repeatingDays = {
+          'mo': false,
+          'tu': false,
+          'we': false,
+          'th': false,
+          'fr': false,
+          'sa': false,
+          'su': false,
+        };
+        this.getElement().classList.remove(`card--repeat`);
+      } else {
+        repeatStatus.innerText = `yes`;
+        repeatField.style.display = `block`;
+        this.getElement().classList.add(`card--repeat`);
+      }
+    });
+  }
+
+  _setDeadline() {
+    this.getElement().querySelector(`.card__date-deadline-toggle`).addEventListener(`click`, () => {
+      const dateStatus = this.getElement().querySelector(`.card__date-status`);
+      const dateField = this.getElement().querySelector(`.card__date-deadline`);
+
+      if (dateStatus.innerText.toLowerCase() === `yes`) {
+        dateStatus.innerText = `no`;
+        dateField.style.display = `none`;
+        this._dueDate = null;
+      } else {
+        dateStatus.innerText = `yes`;
+        dateField.style.display = `inline-block`;
+      }
+    });
+  }
+
+  _setColor() {
+    this.getElement().querySelectorAll(`.card__color-input`).forEach((color) => {
+      color.addEventListener(`click`, () => {
+        this.getElement().classList.remove(`card--${this._currentColor}`);
+        this.getElement().classList.add(`card--${color.value}`);
+        this._currentColor = color.value;
+      });
+    });
+  }
+
+  _removeTag() {
+    this.getElement().querySelectorAll(`.card__hashtag-delete`).forEach((button) => {
+      button.addEventListener(`click`, () => {
+        console.log(this._tags);
+        const tag = button.closest(`.card__hashtag-inner`);
+        this._tags.delete(tag.innerText.slice(1));
+        tag.remove();
+        console.log(this._tags);
+      });
+    });
+  }
+
+  _addTag() {
+    const tagsList = this.getElement().querySelector(`.card__hashtag-list`);
+    const tagField = this.getElement().querySelector(`.card__hashtag-input`);
+
+    tagField.addEventListener(`keydown`, (evt) => {
+      if (evt.keyCode === SPACE_KEYCODE) {
+        evt.preventDefault();
+        this._tags.add(tagField.value);
+        tagsList.insertAdjacentHTML(`beforeend`, `
+          <span class="card__hashtag-inner">
+            <input
+              type="hidden"
+              name="hashtag"
+              value="${tagField.value}"
+              class="card__hashtag-hidden-input"
+            />
+            <p class="card__hashtag-name">
+              #${tagField.value}
+            </p>
+            <button type="button" class="card__hashtag-delete">
+              delete
+            </button>
+          </span>
+        `);
+        tagField.value = ``;
+      }
+    });
+  }
+
+  _subscribeOnEvents() {
+    this._setRepeat();
+    this._setDeadline();
+    this._setColor();
+    this._addTag();
+    this._removeTag();
   }
 
   getTemplate() {
@@ -155,7 +260,7 @@ export default class TaskEdit extends AbstractComponent {
                       <input
                         type="hidden"
                         name="hashtag"
-                        value="repeat"
+                        value="${tag}"
                         class="card__hashtag-hidden-input"
                       />
                       <p class="card__hashtag-name">

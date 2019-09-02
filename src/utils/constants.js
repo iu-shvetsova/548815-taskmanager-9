@@ -1,10 +1,15 @@
+const ESC_KEYCODE = 27;
+const SPACE_KEYCODE = 32;
+
+export {ESC_KEYCODE, SPACE_KEYCODE};
+
 const Position = {
   AFTERBEGIN: `afterbegin`,
   BEFOREEND: `beforeend`,
   AFTEREND: `afterend`
 };
 
-const TASKS_COUNT = 17;
+const TASKS_COUNT = 20;
 const TASK_STEP = 8;
 
 export {TASKS_COUNT, TASK_STEP};

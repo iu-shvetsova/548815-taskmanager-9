@@ -33,16 +33,16 @@ const renderComponents = () => {
     render(mainSection, search.getElement(), Position.BEFOREEND);
   };
 
-  const renderFilter = () => {
+  const renderFilter = (tasks) => {
     const filter = new Filter(getFilters(tasks));
     render(mainSection, filter.getElement(), Position.BEFOREEND);
   };
 
   renderMenu();
   renderSearch();
-  renderFilter();
+  renderFilter(tasks);
 
-  const boardController = new BoardController(mainSection, tasks);
+  const boardController = new BoardController(mainSection, tasks, renderFilter);
   boardController.init();
 };
 
